@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Str;
+use App\Notifications\AutoLoginLink;
 
 class UserController extends Controller
 {
@@ -43,7 +45,13 @@ class UserController extends Controller
                 "password" => bcrypt($request->password),
         ];
 
-        $this->user->create($data);
+        $user = $this->user->create($data);
+
+        $link = $user->autoLink()->create([
+            'token' => Str::random(50),
+        ]);
+
+        $user->notify(new AutoLoginLink($link));
 
         return redirect('/user');
     }

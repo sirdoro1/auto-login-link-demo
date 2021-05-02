@@ -18,4 +18,6 @@ class AutoLoginLink extends Model
     {
         $this->belongsTo(User::class);
     }
+
+    
 }
