@@ -44,6 +44,6 @@ class User extends Authenticatable
 
     public function autoLink()
     {
-        return $this->hasMany(AutoLoginLink::class);
+        return $this->hasOne(AutoLoginLink::class);
     }
 }

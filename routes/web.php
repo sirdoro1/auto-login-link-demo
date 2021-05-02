@@ -22,4 +22,5 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('user', 'App\Http\Controllers\UserController');
+Route::get('auto-login/{token}', ['uses' => 'App\Http\Controllers\AutoLoginLinkController@loginLinkAttempt']);
 

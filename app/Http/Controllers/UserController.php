@@ -47,11 +47,11 @@ class UserController extends Controller
 
         $user = $this->user->create($data);
 
-        $link = $user->autoLink()->create([
+        $user->autoLink()->create([
             'token' => Str::random(50),
         ]);
 
-        $user->notify(new AutoLoginLink($link));
+        $user->notify(new AutoLoginLink($user->autoLink->token));
 
         return redirect('/user');
     }
