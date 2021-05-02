@@ -21,13 +21,17 @@ class AutoLoginLinkController  extends Controller
     {
         $link = $this->autoLink->whereToken($token)->first();
 
-        // Auth::login($link->user);
-        Auth::login($link->user);
+        if($link){
+            Auth::login($link->user);
 
-        if (Auth::check()) {
-            return redirect()->intended('/');
-        }else{
-            dd(Auth::login($link->user));
+            if (Auth::check()) {
+                return redirect()->intended('/home');
+            }else{
+                return redirect()->intended('/login')->with('expired token');
+            }
+
         }
+
+        return redirect()->intended('/login')->with('Invalid token');
     }
 }
